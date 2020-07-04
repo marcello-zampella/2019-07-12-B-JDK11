@@ -5,8 +5,11 @@
 package it.polito.tdp.food;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import it.polito.tdp.food.model.Collegamento;
+import it.polito.tdp.food.model.Food;
 import it.polito.tdp.food.model.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,7 +44,7 @@ public class FoodController {
     private Button btnSimula; // Value injected by FXMLLoader
 
     @FXML // fx:id="boxFood"
-    private ComboBox<?> boxFood; // Value injected by FXMLLoader
+    private ComboBox<Food> boxFood; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
@@ -50,18 +53,53 @@ public class FoodController {
     void doCreaGrafo(ActionEvent event) {
     	txtResult.clear();
     	txtResult.appendText("Creazione grafo...");
+    	int porzioni;
+    	if(isNumeric(this.txtPorzioni.getText()))
+    		 porzioni = Integer.parseInt(this.txtPorzioni.getText());
+    	else {
+    		this.txtResult.setText("DEVI INSERIRE UN NUMERO INTERO!");
+    		return;
+    	}
+    	this.model.creaGrafo(porzioni);
+    	this.boxFood.getItems().addAll(model.getGrafo().vertexSet());
+    	this.txtResult.appendText("finito");
     }
+    
+    public static boolean isNumeric(String str) { 
+    	  try {  
+    	    Integer.parseInt(str);  
+    	    return true;
+    	  } catch(NumberFormatException e){  
+    	    return false;  
+    	  }  
+    	}
 
     @FXML
     void doGrassi(ActionEvent event) {
     	txtResult.clear();
-    	txtResult.appendText("Analisi grassi...");
+    	txtResult.appendText("Analisi grassi...\n");
+    	Food f=this.boxFood.getValue();
+    	ArrayList<Collegamento>list=model.cercaVicini(f);
+    	for(int i=0; i<5; i++) {
+    		this.txtResult.appendText(model.getCibi().get(model.getCibi().indexOf(list.get(i).getCibo()))+" differenza di "+list.get(i).getPeso()+"\n");
+    	}
     }
 
     @FXML
     void doSimula(ActionEvent event) {
     	txtResult.clear();
     	txtResult.appendText("Simulazione...");
+    	if(isNumeric(this.txtK.getText())) {
+    		if(Integer.parseInt(this.txtK.getText())<1||Integer.parseInt(this.txtK.getText())>10) {
+    			this.txtResult.setText("INSERISCI UN NUMERO COMPRESO TRA 1 E 10");
+    			return;
+    		}
+    		model.simula(Integer.parseInt(this.txtK.getText()),this.boxFood.getValue());
+    	}
+    	else {
+    		this.txtResult.setText("INSERISCI UN NUMERO INTERO");
+    		return;
+    	}
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete

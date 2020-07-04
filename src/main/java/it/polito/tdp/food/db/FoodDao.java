@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polito.tdp.food.model.CollegamentoCibi;
 import it.polito.tdp.food.model.Condiment;
 import it.polito.tdp.food.model.Food;
 import it.polito.tdp.food.model.Portion;
@@ -95,6 +96,70 @@ public class FoodDao {
 							res.getDouble("saturated_fats"),
 							res.getInt("food_code")
 							));
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+			
+			conn.close();
+			return list ;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null ;
+		}
+
+	}
+	
+	public List<Food> numberPortion(int porzioni){
+		String sql = "SELECT distinct(f.food_code) AS codice, f.display_name AS nome " + 
+				"FROM portion p, food f " + 
+				"WHERE p.portion_default>=? AND p.food_code=f.food_code " ;
+		try {
+			Connection conn = DBConnect.getConnection() ;
+
+			PreparedStatement st = conn.prepareStatement(sql) ;
+			
+			st.setInt(1, porzioni);
+			
+			List<Food> list = new ArrayList<Food>() ;
+			
+			ResultSet res = st.executeQuery() ;
+			
+			while(res.next()) {
+				try {
+					list.add(new Food(res.getInt("codice"), res.getString("nome")));
+				} catch (Throwable t) {
+					t.printStackTrace();
+				}
+			}
+			
+			conn.close();
+			return list ;
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null ;
+		}
+
+	}
+
+	public ArrayList<CollegamentoCibi>getPorzioneCibo() {
+		String sql = "SELECT p.food_code AS cibo1 ,p2.food_code AS cibo2 ,(p.saturated_fats-p2.saturated_fats) AS diff " + 
+				"FROM portion p, portion p2 " + 
+				"WHERE p.food_code>p2.food_code " ;
+		try {
+			Connection conn = DBConnect.getConnection() ;
+
+			PreparedStatement st = conn.prepareStatement(sql) ;
+						
+			ArrayList<CollegamentoCibi> list = new ArrayList<CollegamentoCibi>() ;
+			
+			ResultSet res = st.executeQuery() ;
+			
+			while(res.next()) {
+				try {
+					list.add(new CollegamentoCibi(new Food(res.getInt("cibo1"),null), new Food(res.getInt("cibo2"),null), res.getDouble("diff")));
 				} catch (Throwable t) {
 					t.printStackTrace();
 				}
