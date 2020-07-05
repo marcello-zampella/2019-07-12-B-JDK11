@@ -50,7 +50,7 @@ public class Food {
 
 	@Override
 	public String toString() {
-		return display_name;
+		return this.display_name;
 	}
 
 	

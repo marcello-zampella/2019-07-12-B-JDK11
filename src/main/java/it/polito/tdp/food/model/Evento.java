@@ -3,21 +3,17 @@ package it.polito.tdp.food.model;
 import java.time.LocalDateTime;
 
 
-public class Evento<Evento> implements Comparable<Evento> {
+public class Evento implements Comparable<Evento> {
 
-	LocalDateTime tempo;
-	private TipoEvento tipo;
-	
-	public enum TipoEvento {
-		ARRIVO_CIBO,
-		PARTENZA_CIBO
-	}
+	private LocalDateTime tempo;
+	private Food cibo;
 	
 	
 	
-	public Evento(LocalDateTime lt, TipoEvento tipo) {
+	
+	public Evento(LocalDateTime lt, Food f) {
 		this.tempo=lt;
-		this.tipo=tipo;
+		this.cibo=f;
 	}
 	
 
@@ -31,8 +27,20 @@ public class Evento<Evento> implements Comparable<Evento> {
 
 	@Override
 	public String toString() {
-		return "Evento [tempo=" + tempo + ", tipo=" + tipo + "]";
+		return "Evento [tempo=" + tempo + ", Cibo=" + cibo + "]";
 	}
+
+
+	public LocalDateTime getTempo() {
+		return tempo;
+	}
+
+
+	public Food getCibo() {
+		return cibo;
+	}
+
+
 	
 
 

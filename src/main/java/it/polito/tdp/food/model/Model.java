@@ -12,7 +12,9 @@ import it.polito.tdp.food.db.FoodDao;
 public class Model {
 	private FoodDao dao;
 	private SimpleDirectedWeightedGraph<Food,DefaultWeightedEdge> grafo;
-private ArrayList<Food> cibi;
+	private ArrayList<Food> cibi;
+	private ArrayList<Collegamento> lista;
+
 	
 	public Model() {
 		dao=new FoodDao();
@@ -44,14 +46,13 @@ private ArrayList<Food> cibi;
 	public SimpleDirectedWeightedGraph<Food, DefaultWeightedEdge> getGrafo() {
 		return grafo;
 	}
-	private ArrayList<Collegamento> lista;
+	
 	public ArrayList<Collegamento> cercaVicini(Food f) {
-		ArrayList<Collegamento> lista= new ArrayList<Collegamento>();
+		lista= new ArrayList<Collegamento>();
 		for( DefaultWeightedEdge arco: grafo.outgoingEdgesOf(f)) {
-			lista.add(new Collegamento(grafo.getEdgeWeight(arco),grafo.getEdgeTarget(arco)));
+			this.lista.add(new Collegamento(grafo.getEdgeWeight(arco),grafo.getEdgeTarget(arco)));
 		}
 		Collections.sort(lista,new ComparatorePerGrassi());
-		System.out.println(lista);
 		return lista;
 	}
 	
@@ -66,7 +67,7 @@ private ArrayList<Food> cibi;
 
 	public void simula(int i, Food food) {
 		Simulatore sim= new Simulatore();
-		sim.init(i,lista,food);
+		sim.init(i,food,this);
 		sim.run();
 		
 	}
