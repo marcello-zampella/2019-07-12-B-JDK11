@@ -1,4 +1,4 @@
-package it.polito.tdp.food.model;
+package it.polito.tdp.food.modell;
 
 public class Condiment {
 	private Integer condiment_code;

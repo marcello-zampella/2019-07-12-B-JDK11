@@ -1,4 +1,4 @@
-package it.polito.tdp.food.model;
+package it.polito.tdp.food.modell;
 
 public class Food {
 	private Integer food_code;

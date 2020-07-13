@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.polito.tdp.food.model.CollegamentoCibi;
-import it.polito.tdp.food.model.Condiment;
-import it.polito.tdp.food.model.Food;
-import it.polito.tdp.food.model.Portion;
+import it.polito.tdp.food.modell.CollegamentoCibi;
+import it.polito.tdp.food.modell.Condiment;
+import it.polito.tdp.food.modell.Food;
+import it.polito.tdp.food.modell.Portion;
 
 public class FoodDao {
 	public List<Food> listAllFoods(){

@@ -1,4 +1,4 @@
-package it.polito.tdp.food.model;
+package it.polito.tdp.food.modell;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

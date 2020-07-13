@@ -8,9 +8,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import it.polito.tdp.food.model.Collegamento;
-import it.polito.tdp.food.model.Food;
-import it.polito.tdp.food.model.Model;
+import it.polito.tdp.food.modell.Collegamento;
+import it.polito.tdp.food.modell.Food;
+import it.polito.tdp.food.modell.Model;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
